@@ -13,7 +13,7 @@ class PostCreateRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,8 @@ class PostCreateRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'title' => 'bail|required|min:2|max:1024',
+            'author' => 'required|min:2|max:1024'
         ];
     }
 }
