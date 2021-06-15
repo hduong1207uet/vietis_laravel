@@ -14,7 +14,7 @@ use App\Contracts\Repositories\PostRepository;
 use App\Validators\PostValidator;
 
 /**
- * Class PostsController.
+ * Class PostsController.1
  *
  * @package namespace App\Http\Controllers\Api;
  */
@@ -42,11 +42,10 @@ class PostsController extends Controller
      */
     public function index()
     {
-
         $this->repository->pushCriteria(app('Prettus\Repository\Criteria\RequestCriteria'));
-        $posts = $this->repository->all();
+        $posts = $this->repository->paginate(10);
 
-        return $posts;
+        return response()->json($posts);
     }
 
     /**
@@ -68,13 +67,6 @@ class PostsController extends Controller
             ];
 
             return response()->json($response);
-
-            if ($request->wantsJson()) {
-
-                return response()->json($response);
-            }
-
-            return redirect()->back()->with('message', $response['message']);
         } catch (ValidatorException $e) {
             return redirect()->back()->withErrors($e->getMessageBag())->withInput();
         }
@@ -126,6 +118,7 @@ class PostsController extends Controller
 
             $response = [
                 'message' => 'Post updated.',
+                'edited' => true,
                 'data'    => $post->toArray(),
             ];
 

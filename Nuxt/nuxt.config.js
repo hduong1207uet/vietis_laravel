@@ -38,11 +38,16 @@ export default {
   modules: [
     '@nuxtjs/axios',
     '@nuxtjs/auth',
-    'nuxt-element-ui'
+
   ],
 
+  router: {
+    // middleware: ['auth']
+  },
+
   axios: {
-    baseURL: "http://127.0.0.1:8000/api/v1/",
+    baseURL: "http://127.0.0.1:8000/api/v1",
+
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
