@@ -14,12 +14,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
-// Route::namespace('Api')->group(function () {
-//     Route::resource('posts', 'PostsController');
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
 // });
 
-Route::resource('posts', 'Api\PostsController');
+Route::group(['prefix' => 'v1', 'namespace' => 'Api\v1'], function() {
+    Route::resource('posts', 'PostsController');
+});
+
+//
+// Route::group(['prefix' => 'v1', 'namespace' => 'Api\v1\NuxtAuth'], function () {
+//     Route::post('nuxtauth/register', 'AuthController@register')->name('register');
+//     Route::post('nuxtauth/login', 'AuthController@login')->name('login');
+
+//     Route::group(['middleware' => 'auth:api'], function () {
+//         Route::post('nuxtauth/logout', 'AuthController@logout')->name('logout');
+//         Route::get('nuxtauth/user', 'AuthController@me')->name('me');
+//     });
+// });

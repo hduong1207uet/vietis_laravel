@@ -23,7 +23,8 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    '@/plugins/element-ui'
+    '@/plugins/element-ui',
+    '@/plugins/vue-notification'
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -36,11 +37,24 @@ export default {
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     '@nuxtjs/axios',
-    'nuxt-element-ui'
+    '@nuxtjs/auth',
+
   ],
+
+  router: {
+    // middleware: ['auth']
+  },
+
+  axios: {
+    baseURL: "http://127.0.0.1:8000/api/v1",
+
+  },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
-    transpile: [/^element-ui/],
+    transpile: [
+      '/^element-ui/',
+      'vue-notification'
+    ],
   }
 }

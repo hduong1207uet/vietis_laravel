@@ -2,6 +2,7 @@
     <el-row type="flex" class="row-bg" justify="center">
         <el-col :span="18">
             <h2 align="center">Sửa bài viết</h2>
+            <notifications group="foo" position = 'top right'/>
             <br />
             <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="120px" label="Form" class="demo-ruleForm">
                 <el-form-item label="Tiêu đề" prop="title">
@@ -20,7 +21,9 @@
 </template>
 
 <script>
-import axios from 'axios';
+  import Vue from 'vue'
+  import axios from 'axios';
+
   export default {
     data() {
         var validateTitle = (rule, value, callback) => {
@@ -40,24 +43,24 @@ import axios from 'axios';
 
         return {
             ruleForm: {
-                title : this.$route.params.row['title'],
-                author: this.$route.params.row['author']
+              title : this.$route.params.row['title'],
+              author: this.$route.params.row['author']
             },
 
             rules: {
                 title : [
-                    { validator: validateTitle, trigger: 'blur' }
+                  { validator: validateTitle, trigger: 'blur' }
                 ],
 
                 author : [
-                    { validator: validateAuthor, trigger: 'blur' }
+                  { validator: validateAuthor, trigger: 'blur' }
                 ],
             }
       };
     },
 
     created() {
-        //
+      //
     },
 
     methods: {
@@ -66,13 +69,18 @@ import axios from 'axios';
           if (valid) {
             let title = this.ruleForm.title;
             let author = this.ruleForm.author;
-            axios.patch(`http://localhost:8000/api/posts/${ this.$route.params.row['id'] }`, {
+            this.$axios.$patch(`posts/${ this.$route.params.row['id'] }`, {
                 title: title,
                 author: author
             })
             .then(function (response){
-                console.log(response);
-                window.history.back();
+              console.log(response);
+              Vue.notify({
+                group: 'foo',
+                title: 'Thành công',
+                text: 'Sửa bài viết thành công !'
+              })
+              window.history.back();
             });
           } else {
             console.log('error submit!!');
